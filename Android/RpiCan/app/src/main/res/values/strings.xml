@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RpiCan</string>
+    <string name="btn_start_service">Start service</string>
+    <string name="btn_stop_service">Stop Service</string>
+</resources>
