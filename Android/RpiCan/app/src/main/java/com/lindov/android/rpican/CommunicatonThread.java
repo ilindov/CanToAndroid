@@ -14,12 +14,11 @@ public class CommunicatonThread extends Thread {
     private static final String LOGTAG = RpiCanService.LOGTAG;
     private RpiCanService service;
     private BluetoothSocket btSocket;
-    private AudioController audioController;
 
     public CommunicatonThread(RpiCanService service, BluetoothSocket btSocket) {
         this.service = service;
         this.btSocket = btSocket;
-        audioController = new AudioController(service);
+        AudioController.audioManager = service.getAudioManager();
     }
 
     @Override
@@ -57,21 +56,41 @@ public class CommunicatonThread extends Thread {
                 return;
             }
 
+            LogDual.v(LOGTAG, "Command received: " + request);
+
             String response = "";
             if (request == null || request.length() == 0) {
                 response = "-1";
             }
             else if (request.length() > 0) {
-                LogDual.v(LOGTAG, "Read: '" + request + "'");
-
-                if (request.equals("0")) {
+                if (request.equals("NEXT_DOWN")) {
+                    AudioController.nextDown();
+                    response = "0";
+                }
+                else if (request.equals("NEXT_UP")) {
+                    AudioController.nextUp();
+                    response = "0";
+                }
+                else if (request.equals("PREV_DOWN")) {
+                    AudioController.prevDown();
+                    response = "0";
+                } else if (request.equals("PREV_UP")) {
+                    AudioController.prevUp();
+                    response = "0";
+                }
+                else if (request.equals("PLAY_PAUSE_DOWN")) {
+                    AudioController.playPauseDown();
+                    response = "0";
+                }
+                else if (request.equals("PLAY_PAUSE_UP")) {
+                    AudioController.playPauseUp();
                     response = "0";
                 }
                 else {
-                    response = "-1";
+//                    Unknown command
+                    response = "-2";
                 }
             }
-//                audioController.play();
 
             try {
                 outStream.write((response + "\n").getBytes());

@@ -22,6 +22,7 @@ public class RpiCanServiceManager extends AppCompatActivity implements Handler.C
     private EditText logArea = null;
     private CheckBox showLog = null;
     private Handler handler = null;
+    private boolean logAreaClean = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +74,17 @@ public class RpiCanServiceManager extends AppCompatActivity implements Handler.C
     public boolean handleMessage(Message message) {
         if (showLog.isChecked()) {
             logArea.append((String) message.obj);
+            logAreaClean = false;
 
             final int scrollAmount = logArea.getLayout().getLineTop(logArea.getLineCount()) - logArea.getHeight();
             if (scrollAmount > 0)
                 logArea.scrollTo(0, scrollAmount);
             else
                 logArea.scrollTo(0, 0);
+        }
+        else if (!logAreaClean) {
+            logArea.setText("");
+            logAreaClean = true;
         }
         return true;
     }

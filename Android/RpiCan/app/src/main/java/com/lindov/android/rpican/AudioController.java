@@ -8,14 +8,29 @@ import android.view.KeyEvent;
  */
 
 public class AudioController {
-    private AudioManager audioManager;
+    public static AudioManager audioManager;
 
-    public AudioController(RpiCanService service) {
-        this.audioManager = service.getAudioManager();
+    public static void playPauseDown() {
+        audioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE));
     }
 
-    public void play() {
-        audioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE));
+    public static void playPauseUp() {
         audioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE));
+    }
+
+    public static void nextDown() {
+        audioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_NEXT));
+    }
+
+    public static void nextUp() {
+        audioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_NEXT));
+    }
+
+    public static void prevDown() {
+        audioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PREVIOUS));
+    }
+
+    public static void prevUp() {
+        audioManager.dispatchMediaKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MEDIA_PREVIOUS));
     }
 }
