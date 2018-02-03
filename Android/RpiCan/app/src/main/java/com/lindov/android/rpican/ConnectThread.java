@@ -89,15 +89,7 @@ public class ConnectThread extends Thread {
                 return false;
             }
 
-            LogDual.v(LOGTAG, "... not connected.");
-            try {
-                sleep(5000);
-            }
-            catch (InterruptedException e) {
-                interrupt();
-                continue;
-            }
-            LogDual.v(LOGTAG, "Trying to connect socket...");
+            LogDual.v(LOGTAG, "... not connected. Reconnecting socket...");
         }
 
         return true;
@@ -105,16 +97,6 @@ public class ConnectThread extends Thread {
 
     private boolean connect() {
         LogDual.v(LOGTAG, "connect() called...");
-
-//
-//        Map<Thread, StackTraceElement[]> myMap = Thread.getAllStackTraces();
-//        Iterator<Thread> iter = myMap.keySet().iterator();
-//        int count = 1;
-//        while (iter.hasNext()) {
-//            Thread t = iter.next();
-//            LogDual.v(LOGTAG,"Thread " + count++ +":" + t.getId());
-//        }
-//
 
         if (communicatonThread != null) {
             LogDual.v(LOGTAG, "CommunicatonThread exists. Interrupting it...");

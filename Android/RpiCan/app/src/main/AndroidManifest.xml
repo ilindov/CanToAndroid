@@ -15,8 +15,8 @@
         <service
             android:name=".RpiCanService"
             android:enabled="true"
-            android:exported="true"></service>
-
+            android:exported="true">
+        </service>
         <activity android:name=".RpiCanServiceManager">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

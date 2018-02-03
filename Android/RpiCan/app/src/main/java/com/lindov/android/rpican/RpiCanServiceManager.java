@@ -88,4 +88,12 @@ public class RpiCanServiceManager extends AppCompatActivity implements Handler.C
         }
         return true;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (intent != null) {
+            stopService(intent);
+        }
+    }
 }

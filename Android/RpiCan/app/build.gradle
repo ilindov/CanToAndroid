@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        RpiCan {
+            keyAlias 'Default'
+            keyPassword 'Test123!'
+            storeFile file('/Users/ilia/Desktop/keystore')
+            storePassword 'Test123!'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.lindov.android.rpican"
