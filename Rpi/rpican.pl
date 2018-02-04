@@ -33,7 +33,7 @@ if (defined($logEnabled) and $logEnabled =~ /-\w*l\w*/ and !$logFile) {
 	die("Usage: rpican.pl <-l | -p | -lp> [/path/to/log/file]\n-l - log to file only\n-p - log to STDOUT only\n-lp - log to both\n");
 }
 if ($logFile) {
-	open(LOGFILE, ">".$logFile) or die("Cannot open log file for writing.\n");
+	open(LOGFILE, ">>".$logFile) or die("Cannot open log file for writing.\n");
 	select((select(LOGFILE), $|=1)[0]);
 }
 
@@ -220,6 +220,8 @@ sub logger {
 	my $msg = shift;
 	my $tag = shift;
 
+	return if (!$logEnabled);
+
 	$msg = scalar(localtime())." (".threads->tid().") <".( $tag ? $tag : "MAIN" )."> ".$msg."\n";
 
 	if ($logEnabled =~ /-\w*p\w*/) {
@@ -250,7 +252,9 @@ sub cleanup {
 		exit(0);
 	}
 	else {
-		sleep(5);
-		exec($^X, $0, @ARGV);
+		# sleep(5);
+		# exec($^X, $0, @ARGV);
+		system("/sbin/reboot &");
+		exit(-1);
 	}
 }
